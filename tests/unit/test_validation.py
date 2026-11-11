@@ -206,15 +206,20 @@ class FreezeTests(unittest.TestCase):
         spec = specification(self.document["Hypothesis"]["ID"])
         spec.update(Stage="forward", Configuration_SHA256=decision["Configuration_SHA256"], Source_Revision=decision["Source_Revision"],
                     Protocol_SHA256=decision["Protocol_SHA256"])
-        register(self.store, "forward", spec)
-        self.store.append("experiment_started", "forward", {}, idempotency_key="start")
+        with patch("regime_research.experiments.utc_now", return_value="2026-11-10T21:01:30+00:00"):
+            register(self.store, "forward", spec)
+            self.store.append("experiment_started", "forward", {}, idempotency_key="start")
         data = SimpleNamespace(bars=pd.DataFrame({"Available_At": pd.to_datetime([decision["Decision_Time"]]), "Instrument_ID": ["SPY"]}))
         with patch("regime_research.validation.load_dataset", return_value=data):
             with patch("regime_research.validation.utc_now", return_value="2026-11-11T14:30:00Z"):
                 with self.assertRaisesRegex(ValueError, "before execution"):
                     record_forward_decision(self.project, directory, self.store, "forward", decision)
+            with patch("regime_research.validation.utc_now", return_value="2026-11-10T21:01:10Z"):
+                with self.assertRaisesRegex(ExperimentLogError, "aware and ordered"):
+                    record_forward_decision(self.project, directory, self.store, "forward", decision)
             with patch("regime_research.validation.utc_now", return_value="2026-11-10T21:02:00Z"):
                 event = record_forward_decision(self.project, directory, self.store, "forward", decision)
+                self.assertEqual(event["Recorded_UTC"], "2026-11-10T21:02:00+00:00")
                 self.assertEqual(record_forward_decision(self.project, directory, self.store, "forward", decision), event)
                 altered = dict(decision, Target_Weight=.7)
                 with self.assertRaisesRegex(ValueError, "cannot be replaced"):
