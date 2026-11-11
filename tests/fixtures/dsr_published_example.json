@@ -1,0 +1,14 @@
+{
+  "Source_URL": "https://www.davidhbailey.com/dhbpapers/deflated-sharpe.pdf",
+  "Source_Pages": [9, 10],
+  "Paper_Version": "2014-07-31",
+  "Annualization": 250,
+  "Annual_Sharpe": 2.5,
+  "Annual_Trial_Sharpe_Variance": 0.5,
+  "Observations": 1250,
+  "Cases": [
+    {"Independent_Trials": 100, "Skewness": -3, "Nonexcess_Kurtosis": 10, "Expected_Threshold_Rounded": 0.1132, "Expected_DSR_Rounded": 0.9004},
+    {"Independent_Trials": 46, "Skewness": -3, "Nonexcess_Kurtosis": 10, "Expected_DSR_Rounded": 0.9505},
+    {"Independent_Trials": 88, "Skewness": 0, "Nonexcess_Kurtosis": 3, "Expected_DSR_Rounded": 0.9505}
+  ]
+}

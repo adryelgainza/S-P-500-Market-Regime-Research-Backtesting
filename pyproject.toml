@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "regime-research"
+version = "0.2.0"
+description = "Auditable data and research tools for daily market-regime studies"
+requires-python = ">=3.13,<3.14"
+dependencies = [
+    "numpy>=2,<3",
+    "pandas>=2.3,<4",
+    "pandas-market-calendars>=5.6,<6",
+]
+
+[project.optional-dependencies]
+download = ["yfinance>=1.8,<2", "requests>=2.31,<3"]
+execution = ["pyarrow>=20,<26"]
+statistics = ["scipy>=1.11,<2"]
+attribution = ["matplotlib>=3.8,<4", "scikit-learn>=1.5,<2"]
+research = ["pyarrow>=20,<26", "scipy>=1.11,<2", "matplotlib>=3.8,<4", "scikit-learn>=1.5,<2",
+            "ipython>=9,<10", "ipykernel>=7,<8", "nbformat>=5,<6", "jupyter-client>=8.9,<9"]
+
+[project.scripts]
+regime-data = "regime_research.data.__main__:main"
+regime-research = "regime_research.runner:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

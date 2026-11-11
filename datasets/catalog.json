@@ -1,0 +1,27 @@
+{
+  "Schema_Version": "1.0.0",
+  "Snapshots": [
+    {
+      "Name": "historical_index",
+      "Dataset_ID": "sha256-555cb54799910947a90c291655abc9dd2e6738ae9238c254ac4ca0c14be45876",
+      "Rows": 24756,
+      "Start": "1927-12-30",
+      "End": "2026-07-23",
+      "Audit_Directory": "runs/layer1_historical_index_data_audit",
+      "First_Eligible_Session": "1973-03-14"
+    },
+    {
+      "Name": "investable_spy",
+      "Dataset_ID": "sha256-f670b664d7872145a0ef05e6a6aefd40cd62a54d1bff2052a452bd185eb8a55f",
+      "Rows": 8427,
+      "Start": "1993-01-29",
+      "End": "2026-07-23",
+      "Audit_Directory": "runs/layer1_investable_spy_data_audit",
+      "First_Eligible_Session": "2013-11-11"
+    }
+  ],
+  "Initial_Import_Archives": [
+    "sha256-7d857bbe81d15e5a794edee532d2b0406ca3f5354aa462888be8eed5811b31ce",
+    "sha256-8a47884ae4300b226a0bd889342def62397280390b04a1c800d728b25ffc7d59"
+  ]
+}

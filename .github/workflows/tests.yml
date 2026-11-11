@@ -1,0 +1,36 @@
+name: Research checks
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      calibrate:
+        description: Run the registered Monte Carlo calibration suite
+        type: boolean
+        default: false
+permissions:
+  contents: read
+jobs:
+  offline-checks:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.13.7'
+          cache: pip
+          cache-dependency-path: requirements.lock
+      - run: python -m pip install -r requirements.lock
+      - run: python -m pip install --no-deps --no-build-isolation -e .
+      - run: python -m pip check
+      - run: python -m unittest discover -s tests -v
+      - run: python -m unittest test_research_integrity -v
+      - if: github.event_name == 'workflow_dispatch' && inputs.calibrate
+        run: python -m regime_research.statistics_calibration --output runs/ci_calibration
+      - if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: research-failure-diagnostics
+          path: |
+            tmp/
+            runs/

@@ -1,0 +1,342 @@
+{
+  "Schema_Version": "1.0.0",
+  "Protocol_ID": "downside-overlay",
+  "Version": "2.0.0",
+  "Hypothesis": {
+    "ID": "downside-overlay-fixed-v1",
+    "Economic_Rationale": "High estimated downside risk may identify intervals where reducing equity exposure improves net risk-adjusted returns relative to the declared buy-and-hold core with the same cash and distribution conventions.",
+    "Predicted_Behavior": "Lower exposure during high downside-score percentiles, with incremental net excess-return Sharpe across fresh SPY observations and transfer markets.",
+    "Primary_Estimand": "Annualized net excess-return Sharpe of the fixed overlay minus the identical-ledger buy-and-hold control on SPY.",
+    "Falsification": "At the fixed review horizon, failure of any strategy gate with adequate data rejects promotion. Undefined inference or too few episodes is inconclusive.",
+    "Choice_Basis": "Engineering commitment after inspected historical research. This representative downside recipe was chosen for simplicity and annual refitting. Its earlier performance is development evidence.",
+    "Implementation_Version": "Package extraction with explicit UTC fit boundaries. Development refits can use labels matured at that decision, including an exit at the same morning open. The archived date-bound implementation remains separately replayable."
+  },
+  "Universe": {
+    "Primary": "SPY",
+    "Transfer": [
+      {
+        "Instrument": "QQQ",
+        "Weight": 0.5,
+        "Previously_Inspected": false
+      },
+      {
+        "Instrument": "IEF",
+        "Weight": 0.5,
+        "Previously_Inspected": false
+      }
+    ],
+    "Currency": "USD",
+    "Calendar": "NYSE",
+    "Inception_Rule": "Use actual first available sessions. Require 20 calendar years of trailing fit history, 200 feature warmup sessions and 252 prior scored sessions before evaluation. No synthetic pre-inception data.",
+    "Inclusion_Rationale": "SPY is the investable primary equity track. QQQ tests equity-style transfer. IEF tests transfer to a different underlying asset class. Inspection flags refer to this project.",
+    "History_Availability": "SPY snapshot ends 2026-07-23. Transfer histories have not been loaded or evaluated in this project."
+  },
+  "Data": {
+    "Dataset_IDs": [
+      "sha256-555cb54799910947a90c291655abc9dd2e6738ae9238c254ac4ca0c14be45876",
+      "sha256-f670b664d7872145a0ef05e6a6aefd40cd62a54d1bff2052a452bd185eb8a55f"
+    ],
+    "Adjustment_Policy": "Layer 1 raw executable OHLC plus explicit splits and distributions. Credit distributions on ex-date where pay dates are unavailable, with the approximation retained in every result.",
+    "Cash_Policy": "Layer 1 lagged DFF-linked proxy, rate date plus 3 US federal business days at 23:59 New York, ACT/360, zero spread, maximum quote age 10 days.",
+    "Quality_Exclusions": "Reject invalid/missing bars, duplicate sessions, bad timestamps and failed action/return reconciliation. Report all excluded sessions and incomplete markets.",
+    "Availability": "Completed daily bars available one minute after the exchange close. Feature rows retain availability times. Training uses revised historical vintages with that limitation disclosed.",
+    "Refresh_Policy": "Explicit immutable snapshot acquisition for declared instruments only. Bind each new dataset ID to its attempt and decisions. Future bytes are late-bound under the same acquisition and availability rules.",
+    "Transfer_Acquisition": "Same raw-price, action, calendar, cash and quality contracts as SPY. Any adapter extension or scientific source change requires a new protocol version before evaluation."
+  },
+  "Models": {
+    "Features": [
+      "SMA_Rel_Close_5",
+      "EMA_Rel_Close_5",
+      "Return_5",
+      "Volatility_5",
+      "Volume_Change_5",
+      "MA_Diff_5",
+      "Price_Range_5",
+      "SMA_Rel_Close_10",
+      "EMA_Rel_Close_10",
+      "Return_10",
+      "Volatility_10",
+      "Volume_Change_10",
+      "MA_Diff_10",
+      "Price_Range_10",
+      "SMA_Rel_Close_20",
+      "EMA_Rel_Close_20",
+      "Return_20",
+      "Volatility_20",
+      "Volume_Change_20",
+      "MA_Diff_20",
+      "Price_Range_20",
+      "SMA_Rel_Close_40",
+      "EMA_Rel_Close_40",
+      "Return_40",
+      "Volatility_40",
+      "Volume_Change_40",
+      "MA_Diff_40",
+      "Price_Range_40",
+      "SMA_Rel_Close_60",
+      "EMA_Rel_Close_60",
+      "Return_60",
+      "Volatility_60",
+      "Volume_Change_60",
+      "MA_Diff_60",
+      "Price_Range_60",
+      "SMA_Rel_Close_100",
+      "EMA_Rel_Close_100",
+      "Return_100",
+      "Volatility_100",
+      "Volume_Change_100",
+      "MA_Diff_100",
+      "Price_Range_100",
+      "SMA_Rel_Close_200",
+      "EMA_Rel_Close_200",
+      "Return_200",
+      "Volatility_200",
+      "Volume_Change_200",
+      "MA_Diff_200",
+      "Price_Range_200",
+      "RSI_14",
+      "MACD_Rel_Close_12_26",
+      "MACD_Signal_Rel_Close_9",
+      "MACD_Histogram_Rel_Close",
+      "ADX_14",
+      "Plus_DI_14",
+      "Minus_DI_14",
+      "MOM_Rel_Close_10",
+      "TTM_Squeeze_On",
+      "TTM_Squeeze_Momentum_Rel_Close_20",
+      "NR7",
+      "ATR_Rel_Close_14",
+      "ATR_Contraction_Ratio",
+      "ATR_Contraction",
+      "BB_Middle_Rel_Close_20",
+      "BB_Upper_Rel_Close_20",
+      "BB_Lower_Rel_Close_20",
+      "BB_Width_20",
+      "BB_PctB_20",
+      "KC_Middle_Rel_Close_20",
+      "KC_Upper_Rel_Close_20",
+      "KC_Lower_Rel_Close_20",
+      "KC_Width_20",
+      "KC_Position_20",
+      "Trend_Slope_5",
+      "Trend_Slope_10",
+      "Trend_Slope_20",
+      "Trend_Slope_40",
+      "Trend_Slope_60",
+      "Trend_Slope_100",
+      "Trend_Slope_200",
+      "SMA_Cross_Spread_10_40",
+      "SMA_Cross_State_10_40",
+      "SMA_Cross_Event_10_40",
+      "SMA_Cross_Spread_20_100",
+      "SMA_Cross_State_20_100",
+      "SMA_Cross_Event_20_100",
+      "SMA_Cross_Spread_40_200",
+      "SMA_Cross_State_40_200",
+      "SMA_Cross_Event_40_200",
+      "EMA_Cross_Spread_10_40",
+      "EMA_Cross_State_10_40",
+      "EMA_Cross_Event_10_40",
+      "EMA_Cross_Spread_20_100",
+      "EMA_Cross_State_20_100",
+      "EMA_Cross_Event_20_100",
+      "EMA_Cross_Spread_40_200",
+      "EMA_Cross_State_40_200",
+      "EMA_Cross_Event_40_200"
+    ],
+    "Target": {
+      "Definition": "Open[t+11]/Open[t+1]-1 < -(2*0.0005 + 0.50*lagged_daily_volatility[t]*sqrt(10))",
+      "Horizon": 10,
+      "Volatility": "Legacy notebook advanced_daily_volatility implementation archived with source",
+      "Label_Maturity": "Label_End_Time is the exit-open timestamp. Labels end strictly before calibration start or refit as appropriate.",
+      "Return_Convention": "Raw executable price-risk target. Portfolio evaluation includes distributions and cash."
+    },
+    "Fit_Window": {
+      "Years": 20,
+      "Minimum_Base_Rows": 756,
+      "Minimum_Calibration_Rows": 126
+    },
+    "Preprocessing": {
+      "Imputer": "Median fitted on base rows",
+      "Selector": {
+        "Estimator": "DecisionTreeClassifier",
+        "max_depth": 5,
+        "min_samples_leaf": 50,
+        "class_weight": "balanced",
+        "random_state": 42,
+        "max_features": 16,
+        "threshold": "-inf"
+      },
+      "Model": {
+        "Estimator": "HistGradientBoostingClassifier",
+        "loss": "log_loss",
+        "learning_rate": 0.05,
+        "max_iter": 75,
+        "max_leaf_nodes": 15,
+        "min_samples_leaf": 25,
+        "l2_regularization": 1.0,
+        "early_stopping": false,
+        "class_weight": "balanced",
+        "random_state": 42
+      }
+    },
+    "Calibration": {
+      "Method": "Sigmoid calibration of frozen base estimator",
+      "Fraction": 0.15,
+      "Minimum_Rows": 126,
+      "Fallback": "Raw base probability if calibration does not contain both classes",
+      "Purge": "Base labels strictly end before first calibration feature decision. Calibration labels strictly end before refit."
+    },
+    "Seed": 42,
+    "Refit_Schedule": "Initial eligible after-close decision, then the first eligible after-close decision of each calendar year. Every training label must mature strictly before that refit timestamp.",
+    "Recipes": [
+      {
+        "Recipe_ID": "HGB_Downside_10d_W20_Full_A",
+        "Model": "HGB",
+        "Target": "Binary_Downside",
+        "Horizon": 10,
+        "Training_Years": 20,
+        "Feature_Group": "Full",
+        "Refit_Frequency": "YS",
+        "Complexity": 2
+      }
+    ]
+  },
+  "Allocation": {
+    "Candidates": [
+      "HGB_Downside_10d_W20_Full_A__AlwaysLong_Step_P90"
+    ],
+    "Selection": "fixed_single_candidate",
+    "Bounds": [
+      0,
+      1
+    ],
+    "Rebalance": "Rebalance at next exchange open only when the rule target changes. Between decisions holdings drift. Fractional shares.",
+    "Overlays": {
+      "Strategy_ID": "AlwaysLong_Step_P90",
+      "Core": "Always_Long",
+      "Mapping": "Step",
+      "Half_Risk_Percentile": 0.75,
+      "Risk_Off_Percentile": 0.9,
+      "Smoothing_Days": 10,
+      "Score_Lookback_Days": 1260,
+      "Hysteresis": 0.1,
+      "Minimum_Hold_Days": 5,
+      "Target_Volatility": null,
+      "Volatility_Window": 20,
+      "Complexity": 2
+    },
+    "Benchmark_Eligible": false,
+    "Comparators": [
+      "Buy_And_Hold",
+      "SMA_50_200"
+    ],
+    "One_Way_Cost": 0.0005,
+    "Score_Rank": "Causal rolling percentile, 1260 sessions, minimum 252 scores, including the currently available score. Ten-session trailing smoothing. State transitions follow archived sharpe_step_multiplier.",
+    "Initial_State": "Start at target 1 after all eligibility requirements are met. Score-history warmup is acquired before evaluation.",
+    "Terminal_Liquidation": false,
+    "Comparator_Rebalance": "Use the same signal-change-only execution policy. Buy-and-hold retains initial shares and accumulates distributions in cash until a rule target changes."
+  },
+  "Evaluation": {
+    "Development": {
+      "Historical_Index": [
+        "1997-04-02",
+        "2026-07-24"
+      ],
+      "SPY_Inspected_Accounting": [
+        "1993-01-29",
+        "2026-07-24"
+      ],
+      "Interpretation": "All existing project results are retrospective. Later refinements create a new protocol."
+    },
+    "Inner_Outer": "One fixed candidate, no performance-based inner or outer selector. Benchmark selection frequency is zero by construction. Import original historical outer choices separately.",
+    "Purging": "Feature availability <= decision. Base labels < calibration start. Calibration labels < refit. Any inner returns must end strictly before selection. Rebuild and compare raw-prefix decisions.",
+    "Transfer": {
+      "Start": "2024-01-02",
+      "End_Exclusive": "2026-07-24",
+      "Date_Policy": "All registered markets, every common eligible session in this fixed window. Insufficient history makes the market and aggregate incomplete. No performance-based date exclusions.",
+      "Aggregation": "Daily constant 50/50 capital weights across registered markets on the identical session/strategy mask. Report per-market results and correlated aggregate. No claim of independent future observations.",
+      "Tuning": "Identical recipe, allocation, costs and inference settings across markets."
+    },
+    "Forward": {
+      "Start": "First eligible scheduled decision strictly after actual receipt freeze time, with required fresh data and score history. Record any skipped or missing scheduled sessions.",
+      "Minimum_Completed_Intervals": 756,
+      "Minimum_Episodes": 10,
+      "Review": "One evidence decision after the first 756 completed scheduled intervals. Too few episodes yields inconclusive and requires a new protocol for extension.",
+      "Recording": "Commit each signal after the registered decision time and before its next-open execution. Late signals are excluded from fresh evidence and disclosed."
+    },
+    "Decision_Delay_Minutes": 1
+  },
+  "Inference": {
+    "Primary_Comparator": "Buy_And_Hold",
+    "Family": [
+      "HGB_Downside_10d_W20_Full_A__AlwaysLong_Step_P90"
+    ],
+    "Confidence": 0.95,
+    "Uncertainty": {
+      "Method": "Paired circular-block percentile delta-Sharpe interval",
+      "Block_Length": 20,
+      "Replications": 10000
+    },
+    "Multiplicity": {
+      "Method": "One-sided joint circular-block max-T on net excess mean difference against the primary control",
+      "Replications": 2000,
+      "HAC_Lag": 20,
+      "Trials": 1,
+      "Scope": "Single fixed rule on genuinely new observations. Historical 182-candidate search and broader incomplete search remain disclosed. No selection across markets or designs."
+    },
+    "Thresholds": {
+      "Minimum_Delta_Sharpe": 0.1,
+      "Minimum_Observations": 756,
+      "Minimum_Episodes": 10,
+      "Maximum_Drawdown": 0.35,
+      "Adjusted_P_Max": 0.05,
+      "DSR_Min": 0.95,
+      "CI_Lower_Min": 0.0,
+      "Cost_Delta_Sharpe_Min": 0.0
+    },
+    "Sensitivity": {
+      "Block_Lengths": [
+        5,
+        63
+      ],
+      "One_Way_Costs": [
+        0,
+        0.0005,
+        0.001,
+        0.002
+      ],
+      "Gate_Cost": 0.001,
+      "Harder_Comparator": "SMA_50_200",
+      "Interpretation": "Report all registered sensitivities. Promotion uses the primary settings and the 10 bps nonnegative delta-Sharpe gate."
+    },
+    "DSR_Interpretation": "Raw trial count 1 for the fresh fixed-rule family. DSR reduces to probability Sharpe exceeds zero with analytical IID moment assumptions. Dependence-aware paired uncertainty and calibrated mean test are separate requirements.",
+    "Episode_Definition": "An invested episode starts when the target changes from zero to positive, including a positive initial target. No merging to inflate the count."
+  },
+  "Operations": {
+    "Runtime_Lock": "requirements.lock, CPython 3.13.7, Windows x86-64. Verify exact active dependency pins before execution.",
+    "Source_Revision": "Exact Git revision plus content-addressed scientific source in each strict run manifest. Changed scientific source requires a new freeze.",
+    "Monitoring": "Monthly completeness and accounting checks. No early performance-based promotion.",
+    "Missing_Data": "Do not trade from stale or incomplete inputs. Record gaps. A missing required interval or market makes the fixed-horizon evaluation incomplete.",
+    "Stopping": "Administrative stop after 756 scheduled completed return intervals. Safety suspension for invalid data/accounting, no promotion at suspension. Redesign or extension requires a new version and a new forward window.",
+    "Reporting": "Monthly operational status, annual descriptive summaries, one fixed-horizon evidence report including every candidate, failure, missing observation, sensitivity and gate.",
+    "Validity_Gates": [
+      "chronology",
+      "accounting",
+      "provenance",
+      "reproducibility",
+      "trial_disclosure",
+      "test_calibration"
+    ],
+    "Evidence_Gates": [
+      "incremental_sharpe",
+      "uncertainty",
+      "multiplicity",
+      "deflated_sharpe",
+      "risk",
+      "cost_sensitivity",
+      "sample"
+    ],
+    "Runner": "Private fresh kernel, exact cell sequence and source hashes, hash-linked kernel audit, independent output verification, atomic completion publication."
+  }
+}
